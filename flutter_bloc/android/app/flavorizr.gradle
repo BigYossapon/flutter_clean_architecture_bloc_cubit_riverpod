@@ -1,0 +1,41 @@
+android {
+    flavorDimensions += "flavor-type"
+
+    productFlavors {
+        diffdev {
+            dimension "flavor-type"
+            applicationId "com.bigyossapon.clean.dev"
+            resValue "string", "app_name", "Clean Arch (DEV)"
+        }
+        dev {
+            dimension "flavor-type"
+            applicationId "com.bigyossapon.clean"
+            resValue "string", "app_name", "Clean Arch (DEV)"
+        }
+        diffsit {
+            dimension "flavor-type"
+            applicationId "com.bigyossapon.clean.sit"
+            resValue "string", "app_name", "Clean Arch (SIT)"
+        }
+        sit {
+            dimension "flavor-type"
+            applicationId "com.bigyossapon.clean.sit"
+            resValue "string", "app_name", "Clean Arch (SIT)"
+        }
+        diffuat {
+            dimension "flavor-type"
+            applicationId "com.bigyossapon.clean.uat"
+            resValue "string", "app_name", "Clean Arch (UAT)"
+        }
+        uat {
+            dimension "flavor-type"
+            applicationId "com.bigyossapon.clean"
+            resValue "string", "app_name", "Clean Arch (UAT)"
+        }
+        prod {
+            dimension "flavor-type"
+            applicationId "com.bigyossapon.clean"
+            resValue "string", "app_name", "Clean Arch"
+        }
+    }
+}

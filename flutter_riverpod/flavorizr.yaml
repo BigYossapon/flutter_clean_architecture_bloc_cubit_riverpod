@@ -1,0 +1,108 @@
+app:
+  android:
+    flavorDimensions: "flavor-type"
+
+flavors:
+  diffdev:
+    app:
+      name: "Clean Arch (DEV)"
+
+    android:
+      icon: "assets/images/icons/playstore.png"
+      applicationId: "com.bigyossapon.clean.dev"
+      firebase:
+        config: ".firebase/dev/google-services.json"
+    ios:
+      icon: "assets/images/icons/appstore.png"
+      bundleId: "com.bigyossapon.clean.dev"
+      firebase:
+        config: ".firebase/dev/GoogleService-Info.plist"
+  dev:
+    app:
+      name: "Clean Arch (DEV)"
+
+    android:
+      icon: "assets/images/icons/playstore.png"
+      applicationId: "com.bigyossapon.clean"
+      firebase:
+        config: ".firebase/prod/google-services.json"
+    ios:
+      icon: "assets/images/icons/appstore.png"
+      bundleId: "com.bigyossapon.clean"
+      firebase:
+        config: ".firebase/prod/GoogleService-Info.plist"
+
+  diffsit:
+    app:
+      name: "Clean Arch (SIT)"
+
+    android:
+      icon: "assets/images/icons/playstore_sit.png"
+      applicationId: "com.bigyossapon.clean.sit"
+      firebase:
+        config: ".firebase/sit/google-services.json"
+    ios:
+      icon: "assets/images/icons/appstore_sit.png"
+      bundleId: "com.bigyossapon.clean"
+      firebase:
+        config: ".firebase/sit/GoogleService-Info.plist"
+  sit:
+    app:
+      name: "Clean Arch (SIT)"
+
+    android:
+      icon: "assets/images/icons/playstore_sit.png"
+      applicationId: "com.bigyossapon.clean.sit"
+      firebase:
+        config: ".firebase/prod/google-services.json"
+    ios:
+      icon: "assets/images/icons/appstore_sit.png"
+      bundleId: "com.bigyossapon.clean"
+      firebase:
+        config: ".firebase/prod/GoogleService-Info.plist"
+
+  diffuat:
+    app:
+      name: "Clean Arch (UAT)"
+
+    android:
+      icon: "assets/images/icons/playstore_uat.png"
+      applicationId: "com.bigyossapon.clean.uat"
+      firebase:
+        config: ".firebase/uat/google-services.json"
+    ios:
+      icon: "assets/images/icons/appstore_uat.png"
+      bundleId: "com.bigyossapon.clean.uat"
+      firebase:
+        config: ".firebase/uat/GoogleService-Info.plist"
+  uat:
+    app:
+      name: "Clean Arch (UAT)"
+
+    android:
+      icon: "assets/images/icons/playstore_uat.png"
+      applicationId: "com.bigyossapon.clean"
+      firebase:
+        config: ".firebase/prod/google-services.json"
+    ios:
+      icon: "assets/images/icons/appstore_uat.png"
+      bundleId: "com.bigyossapon.clean"
+      firebase:
+        config: ".firebase/prod/GoogleService-Info.plist"
+
+  prod:
+    app:
+      name: "Clean Arch"
+
+    android:
+      icon: "assets/images/icons/playstore.png"
+      applicationId: "com.bigyossapon.clean"
+      firebase:
+        config: ".firebase/prod/google-services.json"
+    ios:
+      icon: "assets/images/icons/appstore.png"
+      bundleId: "com.bigyossapon.clean"
+      firebase:
+        config: ".firebase/prod/GoogleService-Info.plist"
+
+ide: "vscode"

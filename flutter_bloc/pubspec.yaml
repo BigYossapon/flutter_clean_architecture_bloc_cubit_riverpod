@@ -1,0 +1,241 @@
+name: flutter_clean_architecture_bloc_cubit_riverpod_template
+description: "A new Flutter project."
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+# In Windows, build-name is used as the major, minor, and patch parts
+# of the product and file versions while build-number is used as the build suffix.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.3.2 <4.0.0"
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.6
+  flutter_svg: ^2.3.0
+
+  # state management ใน presenteation layer ของ app ใช้ riverpod หรือ bloc หรือ cubit
+  flutter_riverpod: ^3.4.3
+  riverpod: ^3.4.3
+  flutter_bloc: ^9.1.1
+  bloc: ^9.2.1
+  #ใช้ get เพื่อนำมาใช้จัดการ animation การย้ายหน้าและเอามาเพื่อเช็คหน้าล่าสุดที่อยู่ได้ง่ายๆเเพื่อในอนาคต
+  #ใช้ get ทำการ push pop หน้าได้ง่ายเขียนสั้นลง
+
+  get: ^4.6.5
+
+  #ใช้ get_it ทำ dependency injection และ service locator pattern
+  get_it: ^9.3.0
+
+  #ใช้จัดการ message และ format ต่างๆ ของ app เช่น การแสดงผลวันที่, เวลา, ตัวเลข, สกุลเงิน, ภาษา เป็นต้น
+  # default fixing format (required)
+  intl: ^0.20.2
+
+  # ใช้ตรวจสอบความเท่าเทียมของ class หรือ object ด้วย prop extend equatable (required)
+  # check class or object equality with prop extend equatable (required)
+  equatable: ^2.0.5
+
+  # ใช้จัดการอนุญาติในโทรศัพท์มือถือ เช่น การเข้าถึงกล้อง, ไมโครโฟน, ที่อยู่, การแจ้งเตือน เป็นต้น
+  # manage permissions (option)
+  permission_handler: ^12.0.1
+
+  # ใช้จัดการยิง api หลังบ้าน และใช้ gen เรียก ที่ datasource
+  # on datasource retrofit generate code for api call and dio for http request
+  #(option) if u want to call api app
+  retrofit: ^4.0.2
+  dio: ^5.3.3
+
+  #ใช้ดู log ที่จัดการความสวยงานแล้วของ dio ที่ dependency injection
+  #logging for dio request and response (option)
+  pretty_dio_logger: ^1.3.1
+  dio_curl_logger: ^1.2.0
+
+  # ใช้จัดการ json ของ model เพื่อให้สามารถแปลง json เป็น model class และ model class เป็น json ได้
+  # setup model class with json_serializable and json_annotation for api call
+  #(option) if u want to call api app
+  json_annotation: ^4.12.0
+
+  #ตัวเปลี่ยนภาษาและข้อความของแอป เช่น การเปลี่ยนภาษาของแอป, การเปลี่ยนข้อความของแอป เป็นต้น
+  #ใช้ร่วมกับ easy_localization_loader เพื่อโหลดภาษาจาก excel หรือ json หรือ csv หรือ xml หรือ yaml หรือ txt หรือ html หรือ js หรือ php หรือ py หรือ rb หรือ go หรือ java หรือ kotlin หรือ swift หรือ objective-c เป็นต้น
+  easy_localization: ^3.0.4
+  easy_localization_loader: ^2.0.1
+
+  #ใช้สำหรับเรียกดูข้อมูลของแอป และข้อมูลของอุปกรณ์ เช่น ชื่อแอป, เวอร์ชัน, หมายเลข build, รหัสแพ็กเกจ, ข้อมูลระบบปฏิบัติการ เป็นต้น
+  # for check version mobile and another info like package name, version, build number, etc...
+  #(required)
+  package_info_plus: ^8.3.1
+
+  # ใช้จัดเก็บข้อมูลในเครื่อง เช่น การเก็บ token, การเก็บค่าการตั้งค่า, การเก็บค่าการตั้งค่าผู้ใช้ เป็นต้น
+  # local storage if u want to store data on device with key value pair
+  #(option) if u want to store data on device
+  flutter_secure_storage: ^9.0.0
+  shared_preferences: ^2.0.8
+
+  #ใช้จัดการส่วน  functional programming เช่น Either, Option, fold L R เป็นต้น ใช้ที่ repository layer ของ app
+  # make functional programming easier with Either, Option, etc with fold L R
+  #(option) if u want to clean response function
+  dartz: ^0.10.1
+
+  #ใช้ mock data test case สำหรับ unit test และ integration test ของ app
+  #test case #(required)
+  mockito: ^5.4.4
+
+  #ใช้จัดการ environment ของ app และเข้ารหัส เช่น การเก็บค่า base url, api key, secret key, client id, client secret เป็นต้น
+  #endcrypt secure .env path  env.dart
+  #(required) secure env data for your app
+  envied: ^1.3.1
+
+  # จัดการ env ในการรัน build app เช่น การรัน build dev, uat, prod เป็นต้น
+  # flavorizr for multiple flavor build dev uat prod etc...
+  # on flavorizer.yaml
+  # and split on there environment to .firebase/env/file
+  #(required) on stagging app and production app for different flavor build
+  flutter_flavorizr: ^2.2.3
+
+  # preview ui on device #(option)
+  # แสดง ui ของ app บน device หรือ simulator โดยไม่ต้องรัน build ใหม่ทุกครั้งที่แก้ไข ui
+  device_preview: ^1.2.0
+
+  #ใช้ดูบัคจากแอปเมื่อปล่อยไปยัง ยroduction มีผู้ใช้แล้ว และสามารถแก้ไขค่าต่างๆ ของแอปได้โดยไม่ต้องอัปเดตแอปใหม่
+  # firebase for analytic bug and error of your app and remote config for change value on your app without update on playstore or appstore
+  #(required crashlytics) for know error and bug on your app and change value on your app without update on playstore or appstore
+  #(required remote config) for change value on your app without update on playstore or appstore
+  firebase_core: ^4.2.0
+  firebase_crashlytics: ^5.0.3
+  firebase_remote_config: ^6.1.0
+  firebase_messaging: ^16.4.3
+
+  #ใช้จัดการแจ้งเตือนในแอป เช่น การแจ้งเตือนแบบ push notification, การแจ้งเตือนแบบ local notification เป็นต้น
+  flutter_local_notifications: ^22.1.0
+
+  # for generate app icon on android and ios flutter_launcher_icons-<flavor>.yaml
+  #(required) for generate app icon on android and ios flutter_launcher_icons-<flavor>.yaml
+  flutter_launcher_icons: ^0.13.1
+
+  #ใช้จัดการแสดงข้อความเด้งแสดง
+  fluttertoast: any
+
+  #flutter_gen for generate assets and colors on your app
+  # dart pub global activate flutter_gen
+
+  # ใช้จัดการเปลี่ยนขชื่อแอปและ bundle id ของแอปในแต่ละ flavor ของแอป เช่น การเปลี่ยนชื่อแอปและ bundle id ของแอปใน flavor dev, uat, prod เป็นต้น
+  #use rename for set get appname , bundleid
+  rename: ^3.1.0
+
+  #ใช้จัดการความปลอดภัยในแอป
+  freerasp: ^7.2.0
+  #ใช้ป้องกันการแคปจอและอัดีดีโอในแอป
+  screen_protector: 1.4.1
+
+  #responsive ui
+  flutter_screenutil: ^5.8.4
+
+  #เอาไว้บังคับเปิดแอปเพื่ออัปเดท
+  url_launcher: ^6.1.1
+
+flutter_launcher_icons:
+  #  image_path: "assets/images/icon-128x128.png"
+  image_path_android: "assets/images/icons/logo/playstore.png"
+  image_path_ios: "assets/images/icons/logo/appstore.png"
+  background_color: "#FFFFFF"
+  android: true # can specify file name here e.g. "ic_launcher"
+  ios: true # can specify file name here e.g. "My-Launcher-Icon"
+  adaptive_background: "#FFFFFF"
+
+  adaptive_icon_background: "#FFFFFF" # only available for Android 8.0 devices and above
+  # adaptive_icon_foreground: "assets/images/icons/logo/android_logo.png" # only available for Android 8.0 devices and above
+  adaptive_icon_monochrome: "#FFFFFF" # only available for Android 13 devices and above
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  remove_alpha_ios: true
+  background_color_android: "#FFFFFF"
+  background_color_ios: "#FFFFFF"
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^3.0.0
+  build_runner: ^2.9.0
+  json_serializable: ^6.11.1
+  envied_generator: ^1.3.1
+  logging: ^1.1.0
+  retrofit_generator: ^10.0.6
+  flutter_gen_runner: ^5.15.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/
+    - assets/images/icons/
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages
+
+flutter_gen:
+  output: lib/src/core/gen/
+  # inputs:
+  #   - assets/
+  integrations:
+    flutter_svg: true
+  # colors:
+  #   inputs:
+  #     - assets/colors/colors.xml
