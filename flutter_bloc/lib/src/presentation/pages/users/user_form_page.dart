@@ -5,6 +5,7 @@ import '../../../domain/entities/export_entities.dart';
 import '../../../injector.dart';
 import '../../bloc_cubit/users/export_users_bloc_cubit.dart';
 import '../../widgets/global/common_widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /// ใช้ร่วมกันทั้ง Create (user == null) และ Update (ส่ง user เข้ามา)
 class UserFormPage extends StatefulWidget {
@@ -29,8 +30,6 @@ class _UserFormPageState extends State<UserFormPage> {
 
   late final CreateUserBloc createUserBloc;
   late final UpdateUserCubit updateUserCubit;
-  late final GetUsersCubit getUsersCubit;
-  late final GetUserBloc getUserBloc;
 
   bool get _isEdit => widget.user != null;
 
@@ -40,8 +39,6 @@ class _UserFormPageState extends State<UserFormPage> {
 
     createUserBloc = getIt<CreateUserBloc>();
     updateUserCubit = getIt<UpdateUserCubit>();
-    getUsersCubit = getIt<GetUsersCubit>();
-    getUserBloc = getIt<GetUserBloc>();
   }
 
   @override
@@ -83,20 +80,7 @@ class _UserFormPageState extends State<UserFormPage> {
 
   void _onSuccess(String message) {
     showSnack(context, message);
-
-    // Refresh รายชื่อผู้ใช้
-    getUsersCubit.getUsers();
-
-    // Refresh รายละเอียดผู้ใช้ กรณีแก้ไข
-    if (_isEdit) {
-      getUserBloc.add(
-        GetUser(
-          widget.user?.id ?? '',
-        ),
-      );
-    }
-
-    Navigator.pop(context);
+    Navigator.pop(context, true);
   }
 
   @override
@@ -148,15 +132,15 @@ class _UserFormPageState extends State<UserFormPage> {
                     return Form(
                       key: _formKey,
                       child: ListView(
-                        padding: const EdgeInsets.all(24),
+                        padding: EdgeInsets.all(24.sp),
                         children: [
                           Center(
                             child: UserAvatar(
                               url: _avatarCtrl.text.trim(),
-                              radius: 48,
+                              radius: 48.sp,
                             ),
                           ),
-                          const SizedBox(height: 24),
+                          SizedBox(height: 24.sp),
                           TextFormField(
                             controller: _nameCtrl,
                             enabled: !loading,
@@ -172,7 +156,7 @@ class _UserFormPageState extends State<UserFormPage> {
                                 ? 'กรุณากรอกชื่อ'
                                 : null,
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: 16.sp),
                           TextFormField(
                             controller: _avatarCtrl,
                             enabled: !loading,
@@ -202,15 +186,15 @@ class _UserFormPageState extends State<UserFormPage> {
                               if (!loading) _submit();
                             },
                           ),
-                          const SizedBox(height: 32),
+                          SizedBox(height: 32.sp),
                           FilledButton.icon(
                             onPressed: loading ? null : _submit,
                             icon: loading
-                                ? const SizedBox(
-                                    width: 18,
-                                    height: 18,
+                                ? SizedBox(
+                                    width: 18.sp,
+                                    height: 18.sp,
                                     child: CircularProgressIndicator(
-                                      strokeWidth: 2,
+                                      strokeWidth: 2.sp,
                                     ),
                                   )
                                 : Icon(
@@ -220,7 +204,7 @@ class _UserFormPageState extends State<UserFormPage> {
                               _isEdit ? 'บันทึก' : 'สร้างผู้ใช้',
                             ),
                             style: FilledButton.styleFrom(
-                              minimumSize: const Size.fromHeight(48),
+                              minimumSize: Size.fromHeight(48.sp),
                             ),
                           ),
                         ],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../domain/entities/export_entities.dart';
 import '../../../injector.dart';
 import '../../bloc_cubit/users/export_users_bloc_cubit.dart';
@@ -12,9 +12,11 @@ class UserDetailPage extends StatefulWidget {
   const UserDetailPage({
     super.key,
     required this.userId,
+    this.onUserChanged,
   });
 
   final String userId;
+  final VoidCallback? onUserChanged;
 
   @override
   State<UserDetailPage> createState() => _UserDetailPageState();
@@ -34,6 +36,13 @@ class _UserDetailPageState extends State<UserDetailPage> {
     getUserBloc.add(GetUser(widget.userId));
   }
 
+  @override
+  void dispose() {
+    getUserBloc.close();
+    deleteUserBloc.close();
+    super.dispose();
+  }
+
   Future<void> _delete(UserEntity user) async {
     final ok = await confirmDelete(
       context,
@@ -49,43 +58,57 @@ class _UserDetailPageState extends State<UserDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<DeleteUserBloc, DeleteUserState>(
+    return BlocConsumer<DeleteUserBloc, DeleteUserState>(
       bloc: deleteUserBloc,
-      listener: (context, state) {
-        if (state is DeleteUserSuccess) {
-          Navigator.pop(context);
+      listener: (context, deleteState) {
+        switch (deleteState) {
+          case DeleteUserSuccess():
+            showSnack(context, 'ลบผู้ใช้สำเร็จ');
+            widget.onUserChanged?.call();
+            Navigator.pop(context, true);
+          case DeleteUserFailure(:final message):
+            showSnack(context, message, error: true);
+          default:
+            break;
         }
       },
-      child: BlocBuilder<GetUserBloc, GetUserState>(
-        bloc: getUserBloc,
-        builder: (context, state) {
-          final deleting = deleteUserBloc.state is DeleteUserLoading;
+      builder: (context, deleteState) {
+        final deleting = deleteState is DeleteUserLoading;
 
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text('User detail'),
-              actions: [
-                if (state is GetUserSuccess) ...[
-                  IconButton(
-                    tooltip: 'แก้ไข',
-                    icon: const Icon(Icons.edit),
-                    onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => UserFormPage(
-                          user: state.user,
-                        ),
-                      ),
+        return BlocBuilder<GetUserBloc, GetUserState>(
+          bloc: getUserBloc,
+          builder: (context, state) {
+            return Scaffold(
+              appBar: AppBar(
+                title: const Text('User detail'),
+                actions: [
+                  if (state is GetUserSuccess) ...[
+                    IconButton(
+                      tooltip: 'แก้ไข',
+                      icon: const Icon(Icons.edit),
+                      onPressed: () async {
+                        final updated = await Navigator.push<bool>(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => UserFormPage(
+                              user: state.user,
+                            ),
+                          ),
+                        );
+                        if (updated == true && mounted) {
+                          getUserBloc.add(GetUser(widget.userId));
+                          widget.onUserChanged?.call();
+                        }
+                      },
                     ),
-                  ),
                   IconButton(
                     tooltip: 'ลบ',
                     icon: deleting
-                        ? const SizedBox(
-                            width: 20,
-                            height: 20,
+                        ? SizedBox(
+                            width: 20.sp,
+                            height: 20.sp,
                             child: CircularProgressIndicator(
-                              strokeWidth: 2,
+                              strokeWidth: 2.sp,
                             ),
                           )
                         : const Icon(Icons.delete_outline),
@@ -107,22 +130,22 @@ class _UserDetailPageState extends State<UserDetailPage> {
                   },
                 ),
               GetUserSuccess(:final user) => ListView(
-                  padding: const EdgeInsets.all(24),
+                  padding: EdgeInsets.all(24.sp),
                   children: [
                     Center(
                       child: UserAvatar(
                         url: user.avatar ?? '',
-                        radius: 56,
+                        radius: 56.sp,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.sp),
                     Center(
                       child: Text(
                         user.name ?? 'ไม่พบชื่อ',
                         style: Theme.of(context).textTheme.headlineSmall,
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24.sp),
                     Card(
                       child: Column(
                         children: [
@@ -133,7 +156,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
                               user.id ?? 'ไม่พบ ID',
                             ),
                           ),
-                          const Divider(height: 1),
+                          Divider(height: 1.sp),
                           ListTile(
                             leading: const Icon(Icons.link),
                             title: const Text('Avatar URL'),
@@ -147,9 +170,10 @@ class _UserDetailPageState extends State<UserDetailPage> {
                   ],
                 ),
             },
-          );
-        },
-      ),
+            );
+          },
+        );
+      },
     );
   }
 }

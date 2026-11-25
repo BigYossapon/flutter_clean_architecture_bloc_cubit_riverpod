@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../domain/entities/export_entities.dart';
 
@@ -61,10 +62,10 @@ class _UserDetailPageState extends ConsumerState<UserDetailPage> {
             IconButton(
               tooltip: 'ลบ',
               icon: deleting
-                  ? const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2))
+                  ? SizedBox(
+                      width: 20.sp,
+                      height: 20.sp,
+                      child: CircularProgressIndicator(strokeWidth: 2.sp))
                   : const Icon(Icons.delete_outline),
               onPressed: deleting ? null : () => _delete(state.user),
             ),
@@ -81,15 +82,15 @@ class _UserDetailPageState extends ConsumerState<UserDetailPage> {
                 ref.read(getUserProvider.notifier).getUser(widget.userId),
           ),
         GetUserSuccess(:final user) => ListView(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.all(24.sp),
             children: [
-              Center(child: UserAvatar(url: user.avatar ?? '', radius: 56)),
-              const SizedBox(height: 16),
+              Center(child: UserAvatar(url: user.avatar ?? '', radius: 56.sp)),
+              SizedBox(height: 16.sp),
               Center(
                 child: Text(user.name ?? 'ไม่พบชื่อ',
                     style: Theme.of(context).textTheme.headlineSmall),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.sp),
               Card(
                 child: Column(
                   children: [
@@ -98,7 +99,7 @@ class _UserDetailPageState extends ConsumerState<UserDetailPage> {
                       title: const Text('ID'),
                       subtitle: Text(user.id ?? 'ไม่พบ ID'),
                     ),
-                    const Divider(height: 1),
+                    Divider(height: 1.sp),
                     ListTile(
                       leading: const Icon(Icons.link),
                       title: const Text('Avatar URL'),

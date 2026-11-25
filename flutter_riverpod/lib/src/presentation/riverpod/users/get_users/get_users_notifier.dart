@@ -10,26 +10,29 @@ class GetUsersNotifier extends Notifier<GetUsersState> {
   Future<void> getUsers() async {
     state = const GetUsersLoading();
 
-    final usersUseCases = ref.read(usersUseCasesProvider);
-    final response = await usersUseCases.getUsers();
+    try {
+      final usersUseCases = ref.read(usersUseCasesProvider);
+      final response = await usersUseCases.getUsers();
 
-    // provider อาจถูก dispose ระหว่าง await
+      // provider อาจถูก dispose ระหว่าง await
+      if (!ref.mounted) return;
 
-    if (!ref.mounted) return;
-
-    await response.fold(
-      (error) async {
-        state = GetUsersFailure(message: error.toString());
-      },
-      (success) async {
-        if (!ref.mounted) return;
-        if (success.isNotEmpty) {
-          _usersList.clear();
-          _usersList.addAll(success);
-        }
-        state = GetUsersSuccess(users: _usersList);
-      },
-    );
+      await response.fold(
+        (error) async {
+          state = GetUsersFailure(message: error.toString());
+        },
+        (success) async {
+          if (!ref.mounted) return;
+          _usersList
+            ..clear()
+            ..addAll(success);
+          state = GetUsersSuccess(users: List.unmodifiable(_usersList));
+        },
+      );
+    } catch (error) {
+      if (!ref.mounted) return;
+      state = GetUsersFailure(message: error.toString());
+    }
   }
 }
 

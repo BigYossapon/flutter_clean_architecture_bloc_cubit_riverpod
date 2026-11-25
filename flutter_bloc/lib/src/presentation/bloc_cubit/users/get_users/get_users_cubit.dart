@@ -26,11 +26,9 @@ class GetUsersCubit extends Cubit<GetUsersState> {
           emit(GetUsersFailure(message: error.toString()));
         },
         (success) {
-          if (success.isNotEmpty) {
-            _usersList
-              ..clear()
-              ..addAll(success);
-          }
+          _usersList
+            ..clear()
+            ..addAll(success);
 
           emit(
             GetUsersSuccess(

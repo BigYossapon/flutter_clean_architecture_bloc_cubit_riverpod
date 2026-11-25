@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../riverpod/users/delete_user/delete_user_notifier.dart';
 import '../../riverpod/users/delete_user/delete_user_state.dart';
 import '../../riverpod/users/get_users/get_users_notifier.dart';
@@ -71,9 +72,9 @@ class _UsersPageState extends ConsumerState<UsersPage> {
         GetUsersSuccess(:final users) => RefreshIndicator(
             onRefresh: () => ref.read(getUsersProvider.notifier).getUsers(),
             child: ListView.separated(
-              padding: const EdgeInsets.only(bottom: 88),
+              padding: EdgeInsets.only(bottom: 88.sp),
               itemCount: users.length,
-              separatorBuilder: (_, __) => const Divider(height: 1),
+              separatorBuilder: (_, __) => Divider(height: 1.sp),
               itemBuilder: (context, i) {
                 final user = users[i];
                 return Dismissible(
@@ -82,7 +83,7 @@ class _UsersPageState extends ConsumerState<UsersPage> {
                   background: Container(
                     color: Theme.of(context).colorScheme.error,
                     alignment: Alignment.centerRight,
-                    padding: const EdgeInsets.only(right: 20),
+                    padding: EdgeInsets.only(right: 20.sp),
                     child: const Icon(Icons.delete, color: Colors.white),
                   ),
                   // ถามยืนยันก่อน แล้วค่อยให้ list รีเฟรชเองหลัง delete สำเร็จ
@@ -97,7 +98,7 @@ class _UsersPageState extends ConsumerState<UsersPage> {
                     return false;
                   },
                   child: ListTile(
-                    leading: UserAvatar(url: user.avatar ?? '', radius: 24),
+                    leading: UserAvatar(url: user.avatar ?? '', radius: 24.sp),
                     title: Text(user.name ?? 'ไม่พบชื่อ'),
                     subtitle: Text('ID ${user.id ?? 'ไม่พบ ID'}'),
                     trailing: const Icon(Icons.chevron_right),

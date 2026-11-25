@@ -10,21 +10,26 @@ class CreateUserNotifier extends Notifier<CreateUserState> {
   Future<void> createUser(UserEntity userEntity) async {
     state = const CreateUserLoading();
 
-    final usersUseCases = ref.read(usersUseCasesProvider);
-    final response = await usersUseCases.createUser(userEntity);
+    try {
+      final usersUseCases = ref.read(usersUseCasesProvider);
+      final response = await usersUseCases.createUser(userEntity);
 
-    // provider อาจถูก dispose ระหว่าง await
-    if (!ref.mounted) return;
+      // provider อาจถูก dispose ระหว่าง await
+      if (!ref.mounted) return;
 
-    await response.fold(
-      (error) async {
-        state = CreateUserFailure(message: error.toString());
-      },
-      (success) async {
-        if (!ref.mounted) return;
-        state = CreateUserSuccess(user: success);
-      },
-    );
+      await response.fold(
+        (error) async {
+          state = CreateUserFailure(message: error.toString());
+        },
+        (success) async {
+          if (!ref.mounted) return;
+          state = CreateUserSuccess(user: success);
+        },
+      );
+    } catch (error) {
+      if (!ref.mounted) return;
+      state = CreateUserFailure(message: error.toString());
+    }
   }
 }
 

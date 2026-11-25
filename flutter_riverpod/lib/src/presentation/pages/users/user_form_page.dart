@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../domain/entities/export_entities.dart';
 import '../../riverpod/users/create_user/create_user_notifier.dart';
@@ -101,12 +102,12 @@ class _UserFormPageState extends ConsumerState<UserFormPage> {
         child: Form(
           key: _formKey,
           child: ListView(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.all(24.sp),
             children: [
               Center(
-                child: UserAvatar(url: _avatarCtrl.text.trim(), radius: 48),
+                child: UserAvatar(url: _avatarCtrl.text.trim(), radius: 48.sp),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.sp),
               TextFormField(
                 controller: _nameCtrl,
                 enabled: !loading,
@@ -119,7 +120,7 @@ class _UserFormPageState extends ConsumerState<UserFormPage> {
                 validator: (v) =>
                     (v == null || v.trim().isEmpty) ? 'กรุณากรอกชื่อ' : null,
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.sp),
               TextFormField(
                 controller: _avatarCtrl,
                 enabled: !loading,
@@ -140,18 +141,18 @@ class _UserFormPageState extends ConsumerState<UserFormPage> {
                 },
                 onFieldSubmitted: (_) => loading ? null : _submit(),
               ),
-              const SizedBox(height: 32),
+              SizedBox(height: 32.sp),
               FilledButton.icon(
                 onPressed: loading ? null : _submit,
                 icon: loading
-                    ? const SizedBox(
-                        width: 18,
-                        height: 18,
-                        child: CircularProgressIndicator(strokeWidth: 2))
+                    ? SizedBox(
+                        width: 18.sp,
+                        height: 18.sp,
+                        child: CircularProgressIndicator(strokeWidth: 2.sp))
                     : Icon(_isEdit ? Icons.save : Icons.add),
                 label: Text(_isEdit ? 'บันทึก' : 'สร้างผู้ใช้'),
-                style: FilledButton.styleFrom(
-                    minimumSize: const Size.fromHeight(48)),
+                style:
+                    FilledButton.styleFrom(minimumSize: Size.fromHeight(48.sp)),
               ),
             ],
           ),

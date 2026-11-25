@@ -12,21 +12,26 @@ class UpdateUserNotifier extends Notifier<UpdateUserState> {
   Future<void> updateUser(String userId, UserEntity userEntity) async {
     state = const UpdateUserLoading();
 
-    final usersUseCases = ref.read(usersUseCasesProvider);
-    final response = await usersUseCases.updateUser(userId, userEntity);
+    try {
+      final usersUseCases = ref.read(usersUseCasesProvider);
+      final response = await usersUseCases.updateUser(userId, userEntity);
 
-    // provider อาจถูก dispose ระหว่าง await
-    if (!ref.mounted) return;
+      // provider อาจถูก dispose ระหว่าง await
+      if (!ref.mounted) return;
 
-    await response.fold(
-      (error) async {
-        state = UpdateUserFailure(message: error.toString());
-      },
-      (success) async {
-        if (!ref.mounted) return;
-        state = UpdateUserSuccess(user: success);
-      },
-    );
+      await response.fold(
+        (error) async {
+          state = UpdateUserFailure(message: error.toString());
+        },
+        (success) async {
+          if (!ref.mounted) return;
+          state = UpdateUserSuccess(user: success);
+        },
+      );
+    } catch (error) {
+      if (!ref.mounted) return;
+      state = UpdateUserFailure(message: error.toString());
+    }
   }
 }
 

@@ -151,6 +151,8 @@ dependencies:
 
   #responsive ui
   flutter_screenutil: ^5.8.4
+  #responsive device
+  responsive_framework: ^1.5.1
 
   #เอาไว้บังคับเปิดแอปเพื่ออัปเดท
   url_launcher: ^6.1.1
@@ -188,6 +190,9 @@ dev_dependencies:
   logging: ^1.1.0
   retrofit_generator: ^10.0.6
   flutter_gen_runner: ^5.15.0
+
+  integration_test:
+    sdk: flutter
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

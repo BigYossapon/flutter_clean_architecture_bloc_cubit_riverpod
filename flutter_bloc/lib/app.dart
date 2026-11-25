@@ -15,6 +15,7 @@ import 'main.dart';
 import 'src/core/constants/app_constants.dart';
 import 'src/core/utils/func.dart';
 import 'src/core/utils/์navigator_observation.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class App extends StatelessWidget {
   final bool remoteConfigLoaded;
@@ -36,6 +37,15 @@ class App extends StatelessWidget {
             remoteConfigLoaded: remoteConfigLoaded,
           ),
           show: kDebugMode),
+      builder: (context, child) => ResponsiveBreakpoints.builder(
+        child: child!,
+        breakpoints: [
+          const Breakpoint(start: 0, end: 450, name: MOBILE),
+          const Breakpoint(start: 451, end: 800, name: TABLET),
+          const Breakpoint(start: 801, end: 1920, name: DESKTOP),
+          const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
+        ],
+      ),
     );
   }
 
